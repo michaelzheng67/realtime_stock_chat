@@ -6,3 +6,7 @@ In bloomberg terminal, you can get live data feeds of stocks as well as be able 
 ### Implementation:
 When user opens up a tab on a given stock, a websocket connection is established with the stock data provider to retrieve values in real time. Then, when the user wants to open chat, another connection is opened with broadcaster running on localhost port, which lets users have group communication. Chat history is stored in a list while there is active users connected in order for new users to see the current chat history.
 
+### Tech Stack:
+Svelte frontend, Go backend
+
+
