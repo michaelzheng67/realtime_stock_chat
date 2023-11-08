@@ -1,6 +1,6 @@
 # Real time Stock Trading Chat App
 
-'A full stack app that allows traders to look at stocks and chat in real time'
+`A full stack app that allows traders to look at stocks and chat in real time`
 
 
 ### Idea: 
