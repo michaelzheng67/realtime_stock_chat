@@ -16,3 +16,12 @@ When user opens up a tab on a given stock, a websocket connection is established
 Svelte frontend, Go backend
 
 
+### Setup:
+
+Running Svelte frontend:
+```
+cd svelte-app
+npm run dev
+```
+
+
