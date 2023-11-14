@@ -19,6 +19,11 @@ Svelte frontend, Go backend
 ### Setup:
 
 ```
+// current implementation runs locally
+// localhost:8000 - port for stock data websocket
+// localhost:8080 - web UI
+// localhost:9000 - port for trader chat websocket
+
 cd backend
 go run main.go // start the backend server
 
