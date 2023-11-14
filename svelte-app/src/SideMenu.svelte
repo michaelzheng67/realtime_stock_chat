@@ -2,6 +2,8 @@
   // State variable to track if the menu is open or closed
   let isOpen = true;
   export let stocks;
+  export let updatePage;
+  export let colors;
 
 </script>
 <!-- You can toggle the class to show or hide the menu -->
@@ -17,7 +19,7 @@
     {#each Object.entries(stocks) as [key, value]}
       <!-- <li>{key}: {value}</li> -->
       <div>
-        <h3>{key} : ${value}</h3>
+        <h3 class="entry"><button on:click={() => updatePage(key)} class="key">{key}</button> : <span class="value" style="color: {colors[key]}">${value}</span></h3>
       </div>
 
     {/each}
@@ -42,7 +44,17 @@
     left: 0;
   }
 
-  li {
-    margin-bottom: 10px; /* Adjust the value as needed */
+  .key {
+    width: 100px;
   }
+
+  .value {
+    width: 150px;
+    overflow: hidden;
+  }
+
+  .entry {
+    display: flex;
+  }
+
 </style>

@@ -4,7 +4,7 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	let websocket;
-	let messages = [];
+	let page = "home";
 	let stocks = {
 		AAPL: '119',
 		MSFT: '213',
@@ -15,6 +15,21 @@
 		BABA: '309',
 	}
 
+	let colors = {
+		AAPL: 'grey',
+		MSFT: 'grey',
+		AMZN: 'grey',
+		GOOG: 'grey',
+		META: 'grey',
+		TSLA: 'grey',
+		BABA: 'grey',
+	}
+
+	function updatePage(newPage) {
+		page = newPage
+	
+	}
+
 	function connect() {
 		websocket = new WebSocket("ws://localhost:8000/stock-ws");
 
@@ -23,23 +38,29 @@
 		};
 
 		websocket.onmessage = function(event) {
-		// Push the new message to the messages array
-		// messages = [...messages, event.data];
+
 		let parsed
 		let sym 
 		let c 
 
 		parsed = JSON.parse(event.data)
-		console.log(parsed)
 
 		sym = parsed.sym
 		c = parsed.c
 
-		// messages = [...messages, sym + ": " + c]
-
 
 		if (sym in stocks) {
-			stocks[sym] = c
+			// update stock movement color
+			if (stocks[sym] > c) {
+				colors[sym] = 'red'
+			} else if (stocks[sym] < c) {
+				colors[sym] = 'green'
+			} else {
+				colors[sym] = 'grey'
+			}
+
+			// update price
+			stocks[sym] = parseFloat(c).toFixed(2)
 		}
 		};
 
@@ -66,16 +87,19 @@
 <main>
 
 	<div class="header">
+		{#if page == "home"}
 		<h1>Real Time Stock Chat</h1>
 		<h3>View stock data in real time and chat to your fellow traders</h3>
 
-		{#each messages as message}
-			<li>{message}</li>
-		{/each}
+		{:else}
+		<h1>{page}</h1>
+		<h3>View stock data in real time and chat to your fellow traders</h3>
+		{/if}
 
+		
 	</div>
 
-	<SideMenu {stocks}/>
+	<SideMenu {stocks} {updatePage} {colors}/>
 	<div class="bottom-right">
 		<ChatPopup />
 	</div>

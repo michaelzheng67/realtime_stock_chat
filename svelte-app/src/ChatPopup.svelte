@@ -4,6 +4,7 @@
 
 	let showModal = false;
 	let chat = [];
+	let websocket;
 
 	function connect() {
 		websocket = new WebSocket("ws://localhost:9000/trader-ws");
@@ -44,11 +45,11 @@
 		Live Chat
 	</h2>
 
-	<ul>
-		{#each chat as string}
-			<li>{string}</li>
-		{/each}
-	</ul>
+	<div>
+	{#each chat as string}
+		<p>{string}</p>
+	{/each}
+	</div>
 
 	<input type="text">
 </Modal>

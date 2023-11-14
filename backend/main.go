@@ -149,17 +149,19 @@ func main() {
 	// :8080 - trader chat
 
     stock_server := NewServer()
+	stockMux := http.NewServeMux()
+	stockMux.Handle("/stock-ws", websocket.Handler(stock_server.handleWS))
 	go func() {
-		http.Handle("/stock-ws", websocket.Handler(stock_server.handleWS))
-		if err := http.ListenAndServe(":8000", nil); err != nil {
+		if err := http.ListenAndServe(":8000", stockMux); err != nil {
 			fmt.Printf("Failed to start stock server: %v", err)
 		}
 	}()
 
 	trader_server := NewServer()
+	traderMux := http.NewServeMux()
+	traderMux.Handle("/trader-ws", websocket.Handler(trader_server.handleWS))
 	go func() {
-		http.Handle("/trader-ws", websocket.Handler(trader_server.handleWS))
-		if err := http.ListenAndServe(":9000", nil); err != nil {
+		if err := http.ListenAndServe(":9000", traderMux); err != nil {
 			fmt.Printf("Failed to start trader server: %v", err)
 		}
 	}()
