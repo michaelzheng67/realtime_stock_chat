@@ -1,30 +1,54 @@
 <script>
 	import Modal from './Modal.svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	let showModal = false;
+	let chat = [];
+
+	function connect() {
+		websocket = new WebSocket("ws://localhost:9000/trader-ws");
+
+		websocket.onopen = function(event) {
+		console.log("Connected to WebSocket");
+		};
+
+		websocket.onmessage = function(event) {
+		// Push the new message to the messages array
+		chat = [...chat, event.data];
+		};
+
+		websocket.onerror = function(error) {
+		console.error("WebSocket Error:", error);
+		};
+
+		websocket.onclose = function(event) {
+		console.log("WebSocket connection closed", event);
+		};
+	}
+
+	onMount(() => {
+		connect();
+	});
+
+	onDestroy(() => {
+		if (websocket) {
+		websocket.close();
+		}
+	});
 </script>
 
-<button on:click={() => (showModal = true)}> show modal </button>
+<button on:click={() => (showModal = true)}> Chat </button>
 
 <Modal bind:showModal>
 	<h2 slot="header">
 		Live Chat
 	</h2>
 
-	<ol class="definition-list">
-		<li>of or relating to modality in logic</li>
-		<li>
-			containing provisions as to the mode of procedure or the manner of taking effect —used of a
-			contract or legacy
-		</li>
-		<li>of or relating to a musical mode</li>
-		<li>of or relating to structure as opposed to substance</li>
-		<li>
-			of, relating to, or constituting a grammatical form or category characteristically indicating
-			predication
-		</li>
-		<li>of or relating to a statistical mode</li>
-	</ol>
+	<ul>
+		{#each chat as string}
+			<li>{string}</li>
+		{/each}
+	</ul>
 
 	<input type="text">
 </Modal>

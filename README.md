@@ -18,10 +18,12 @@ Svelte frontend, Go backend
 
 ### Setup:
 
-Running Svelte frontend:
 ```
+cd backend
+go run main.go // start the backend server
+
 cd svelte-app
-npm run dev
+npm run dev // start frontend
 ```
 
 

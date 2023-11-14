@@ -1,25 +1,29 @@
 <script>
   // State variable to track if the menu is open or closed
   let isOpen = true;
+  export let stocks;
 
-  // Function to toggle the menu state
-  // function toggleMenu() {
-  //   isOpen = !isOpen;
-  // }
 </script>
-
 <!-- You can toggle the class to show or hide the menu -->
 <div class="side-menu" class:open={isOpen}>
-  <!-- Side menu content here -->
-  <!-- <button on:click={toggleMenu}>Close Menu</button> -->
-  <ul>
+
+  <!-- <ul>
     <li>Home</li>
     <li>About</li>
     <li>Contact</li>
-  </ul>
+  </ul> -->
+
+  <!-- <ul> -->
+    {#each Object.entries(stocks) as [key, value]}
+      <!-- <li>{key}: {value}</li> -->
+      <div>
+        <h3>{key} : ${value}</h3>
+      </div>
+
+    {/each}
+  <!-- </ul> -->
 </div>
-<!-- 
-<button on:click={toggleMenu}>Open Menu</button> -->
+
 
 <style>
   .side-menu {
@@ -36,5 +40,9 @@
 
   .side-menu.open {
     left: 0;
+  }
+
+  li {
+    margin-bottom: 10px; /* Adjust the value as needed */
   }
 </style>
