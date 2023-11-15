@@ -23,6 +23,8 @@ Svelte frontend, Go backend
 // localhost:8000 - port for stock data websocket
 // localhost:8080 - web UI
 // localhost:9000 - port for trader chat websocket
+// set POLYGON_API_KEY to the api key that you get from polygon.io. You must have a starter package or higher for 
+// stock data in order to get websocket feed
 
 cd backend
 go run main.go // start the backend server

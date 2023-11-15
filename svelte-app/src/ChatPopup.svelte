@@ -27,6 +27,27 @@
 		};
 	}
 
+	let inputMessage = '';
+
+    // Existing WebSocket and sendMessage function...
+
+    function handleEnterPress(event) {
+        if (event.key === 'Enter') {
+            sendMessage(inputMessage);
+            inputMessage = ''; // Clear the input field after sending the message
+        }
+    }
+
+	// send websocket message
+	function sendMessage(message) {
+		if (websocket && websocket.readyState === WebSocket.OPEN) {
+			websocket.send(message);
+		} else {
+			console.error("WebSocket is not connected.");
+		}
+	}
+
+
 	onMount(() => {
 		connect();
 	});
@@ -45,11 +66,21 @@
 		Live Chat
 	</h2>
 
-	<div>
+	<div class="scrollable-content">
 	{#each chat as string}
 		<p>{string}</p>
 	{/each}
 	</div>
 
-	<input type="text">
+	<input type="text" bind:value={inputMessage} on:keydown={handleEnterPress}>
 </Modal>
+
+
+
+<style>
+
+.scrollable-content {
+    height: 300px; /* or max-height: 300px; */
+    overflow: auto; /* or overflow: scroll; */
+}
+</style>

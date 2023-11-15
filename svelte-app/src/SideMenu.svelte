@@ -19,7 +19,7 @@
     {#each Object.entries(stocks) as [key, value]}
       <!-- <li>{key}: {value}</li> -->
       <div>
-        <h3 class="entry"><button on:click={() => updatePage(key)} class="key">{key}</button> : <span class="value" style="color: {colors[key]}">${value}</span></h3>
+        <h3 class="entry"><button on:click={() => updatePage(key)} class="key">{key}</button><span class="value" style="color: {colors[key]}">: ${value}</span></h3>
       </div>
 
     {/each}
